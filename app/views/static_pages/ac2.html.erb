@@ -1,0 +1,151 @@
+<h1> This is Activity 2 Solution </h1>
+
+<h2> Fix game auto start </h2>
+
+<p>At first ,the program called startGame() and it start game immediately so we need to change that.</p>
+
+<pre>
+function restartGame() {
+    document.getElementById("myfilter").style.display = "none";
+    document.getElementById("myrestartbutton").style.display = "none";
+    myGameArea.stop();
+    myGameArea.clear();
+    myGameArea = {};
+    myGamePiece = {};
+    myObstacles = [];
+    myscore = {};
+    document.getElementById("canvascontainer").innerHTML = "";
+    startGame()
+}
+
+function startGame() {
+    myGameArea = new gamearea();
+    myGamePiece = new component(30, 30, "red", 10, 75);
+    myscore = new component("15px", "Consolas", "black", 220, 25, "text");
+    myGameArea.start();
+}
+</pre>
+
+<p>Change into this </p>
+
+<pre>
+function restartGame() {
+    document.getElementById("myfilter").style.display = "none";
+    document.getElementById("myrestartbutton").style.display = "none";
+    myGameArea.stop();
+    myGameArea.clear();
+    myGameArea = {};
+    myGamePiece = {};
+    myObstacles = [];
+    myscore = {};
+    document.getElementById("canvascontainer").innerHTML = "";
+    beginGame()
+}
+
+function initializeGame() {
+    myGameArea = new gamearea();
+    myGamePiece = new component(30, 30, "red", 10, 75);
+    myscore = new component("15px", "Consolas", "black", 220, 25, "text");
+}
+
+function startGame() {
+    initializeGame();
+}
+
+function beginGame() {
+    initializeGame();
+    myGameArea.start();
+}
+</pre>
+
+<h2> Change color. </h2>
+
+<p>To change game piece and obstacle color we need to change its color property.</p>
+
+<pre>
+myGamePiece = new component(30, 30, "red", 10, 75);
+</pre>
+
+<p>Change its color property into blue.</p>
+
+<pre>
+myGamePiece = new component(30, 30, "blue", 10, 75);
+</pre>
+
+<p>Do the same thing to obstacle.</p>
+
+<xmp>
+myObstacles.push(new component(10, height, "green", x, 0));
+myObstacles.push(new component(10, x - height - gap, "green", x, height + gap));
+</xmp>
+
+<p>Change to yellow color.</p>
+
+<pre>
+myObstacles.push(new component(10, height, "yellow", x, 0));
+myObstacles.push(new component(10, x - height - gap, "yellow", x, height + gap));
+</pre>
+
+<h2> Add PAUSE button </h2>
+
+<p>First, add PAUSE button in the game.</p>
+
+<xmp>
+<button ontouchstart="pause()" onmousedown="pause()" >PAUSE</button>
+</xmp>
+
+<p> and add pause() function. </p>
+
+<xmp>
+function pause() {
+    myGameArea.pause = !myGameArea.pause;
+}
+</xmp>
+
+<h2> Add 3 life </h2>
+
+<p>First, add life parameter into component class.</p>
+
+<xmp>
+this.life = 3;
+</xmp>
+
+<p>add add damage mad isDead function.</p>
+
+<xmp>
+this.isDead = function() {
+    return this.life == 0;
+}
+this.damamge = function() {
+    this.life -= 1;
+}
+</xmp>
+
+<p>then edit the code in updateGameArea</p>
+
+<xmp>
+if (myGamePiece.crashWith(myObstacles[i])) {
+    myGameArea.stop();
+    document.getElementById("myfilter").style.display = "block";
+    document.getElementById("myrestartbutton").style.display = "block";
+    return;
+}
+</xmp>
+
+<p>into</p>
+
+<xmp>
+if (myGamePiece.crashWith(myObstacles[i])) {
+    myGamePiece.damamge();
+    if( myGamePiece.isDead() ) {
+        myGameArea.stop();
+        document.getElementById("myfilter").style.display = "block";
+        document.getElementById("myrestartbutton").style.display = "block";
+    } else {
+        myGamePiece.setPosition(10,75);
+        myObstacles = [];
+    }
+    return;
+}
+</xmp>
+

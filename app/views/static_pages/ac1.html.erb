@@ -1,0 +1,93 @@
+<h1>Acitivity 1</h1>
+
+<p>1.1 link to the dom mind maping : https://mm.tt/886304991?t=O4bTa2tKFP<p>
+
+<p>1.2 u can find image that is a css model called "1.2 css.jpg"</p>
+
+<p>1.3 </p>
+    <p>locate code by using developer tool<p>
+    <xmp>
+    then go --> <code> <body> </code>
+            --> <div class ="container sec">
+            --> <div class="row">
+            --> <div class="col-md-2">
+            --> <div class="instructor">
+
+            find an instructor that contain these code
+
+      <a href="http://ai.stanford.edu/~syyeung/">
+    <div class="instructorphoto">
+      <img src="img/serena.jpg"></div>
+      <!--You can use copy this code from above and change image file to someone else-->
+    <div>Serena Yeung</div>
+</a>
+</xmp>
+
+<p>1.4 first answer : classes called : convnetvis is changing all the time.
+    second answer : convnet_demo.js is manipulating the animation :
+    <p>
+
+<xmp>
+var draw_network_state = function(preds) {
+var ww = $(window).width();
+
+var parent_div = document.getElementById('convnetvis');
+parent_div.innerHTML = '';
+
+// draw convnet activations
+var N = net.layers.length;
+for(var i=0;i<N;i++) {
+var L = net.layers[i];
+if(L.layer_type == 'softmax') { continue; }
+
+if(ww < 950) {
+  // we have to collapse. skip conv layers
+  if(L.layer_type === 'conv') { continue; }
+}
+if(ww < 660) {
+  // we have to collapse even more. skip pool layers
+  if(L.layer_type === 'pool') { continue; }
+}
+if(ww < 522) {
+  if(L.layer_type === 'softmax') { continue; }
+}
+if(ww < 450) {
+  if(!(i === 0 || i === 4 || i === 9 || i === 14)) {
+    continue;
+  }
+}
+
+var div = document.createElement('div');
+div.className = 'layer';
+
+if(i === 0) {
+  // data layer
+  draw_activations_COLOR(div, L.out_act, 2); // draw Vol into canv
+  div.setAttribute("id", "inputlayer");
+} else {
+  var sx = L.out_act.sx;
+  if(sx === 32) s = 1;
+  if(sx === 16) s = 2;
+  if(sx === 8) s = 4;
+  if(sx === 4) s = 8;
+  if(sx === 1) s = 32;
+  draw_activations(div, L.out_act, s);
+}
+parent_div.appendChild(div);
+}
+
+</xmp>
+
+<p>1.5 Answer : You can find all of the images by using developter tool then on the
+              left side of the tool you can see a folder name "img" this folder
+              contains all of the image that usin in this page.<p>
+
+1.6 Answer : Open developer tool and on the left side click a file name "style.css" then locate this code
+
+        <xmp>
+                .qq {
+                  color: #060;
+                  }
+        </xmp>
+
+              <p>then change #060 to "blue" without quote </p>
