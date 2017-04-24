@@ -3,5 +3,5 @@ class ApplicationController < ActionController::Base
   
   def hello
         rander html: "hello, world!"
-    end
+  end
 end
